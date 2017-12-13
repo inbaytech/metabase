@@ -1,6 +1,7 @@
 (ns metabase.query-processor.middleware.parameters
   "Middleware for substituting parameters in queries."
   (:require [clojure.data :as data]
+            [clojure.string :as string]
             [clojure.tools.logging :as log]
             [metabase.driver.generic-sql.util.unprepare :as unprepare]
             [metabase.query-processor
@@ -8,17 +9,20 @@
              [util :as qputil]]
             [metabase.query-processor.middleware.parameters
              [mbql :as mbql-params]
-             [sql :as sql-params]]
+             [sql :as sql-params]
+             [dsl :as dsl-params]]
             [metabase.util :as u]))
 
 (defn- expand-parameters*
   "Expand any :parameters set on the QUERY-DICT and apply them to the query definition.
    This function removes the :parameters attribute from the QUERY-DICT as part of its execution."
-  [{:keys [parameters], :as query-dict}]
+  [{:keys [parameters driver], :as query-dict}]
   ;; params in native queries are currently only supported for SQL drivers
   (if (qputil/mbql-query? query-dict)
     (mbql-params/expand (dissoc query-dict :parameters) parameters)
-    (sql-params/expand query-dict)))
+    (if (= (string/trim (str (type driver))) "class metabase.driver.elasticsearch.ElasticSearchDriver")
+      (dsl-params/expand query-dict)
+      (sql-params/expand query-dict))))
 
 (defn- expand-params-in-native-source-query
   "Expand parameters in a native source query."

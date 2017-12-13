@@ -1,0 +1,31 @@
+##
+# mongodb
+##
+mongodb:
+  image: mongo
+  ports:
+    - 27017:27017
+
+##
+# elasticsearch
+##
+elasticsearch:
+  image: elasticsearch:5.6-alpine
+  ports:
+    - 9200:9200
+    - 9300:9300
+
+##
+# kibana
+##
+#kibana:
+#  image: kibana
+#  ports:
+#    - 5601:5601
+#  links:
+#    - elasticsearch
+#  environment:
+#    #ELASTICSEARCH_URL: http://10.254.254.254:9200
+#    VIRTUAL_HOST: kibana.test
+#    VIRTUAL_PORT: 5601
+

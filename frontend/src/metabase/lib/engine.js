@@ -3,6 +3,7 @@ export function getEngineNativeType(engine) {
     case "mongo":
     case "druid":
     case "googleanalytics":
+    case "elasticsearch":
       return "json";
     default:
       return "sql";
@@ -27,7 +28,7 @@ export function getEngineNativeAceMode(engine) {
 }
 
 export function getEngineNativeRequiresTable(engine) {
-  return engine === "mongo";
+  return engine === "mongo" || engine === "elasticsearch";
 }
 
 export function formatJsonQuery(query, engine) {

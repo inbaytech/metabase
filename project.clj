@@ -80,6 +80,7 @@
                   :exclusions [com.github.wendykierp/JTransforms]]
                  [net.cgrand/xforms "0.13.0"                          ; Additional transducers
                   :exclusions [org.clojure/clojurescript]]
+                 [clojurewerkz/elastisch "3.0.0-beta2"]               ; elasticsearch client - 3.0.0-beta2
                  [net.sf.cssbox/cssbox "4.12"                         ; HTML / CSS rendering
                   :exclusions [org.slf4j/slf4j-api]]
                  [com.clearspring.analytics/stream "2.9.5"            ; Various sketching algorithms
